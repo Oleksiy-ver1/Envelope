@@ -29,24 +29,31 @@ public class Envelope {
         myEnvelope[2] = Double.parseDouble(cStr);
         myEnvelope[3] = Double.parseDouble(dStr);
 
+
         return myEnvelope;
     }
 
     private Boolean plaiceInside() throws IOException {
         getEnvelop();
-        if (myEnvelope[0] <= myEnvelope[2] && myEnvelope[1] <= myEnvelope[3]) {
+
+        if (!validationEnvelope(myEnvelope)){
+            System.out.println("размер должен быть больше 0");
+            return false;
+        }
+
+        if (myEnvelope[0] < myEnvelope[2] && myEnvelope[1] < myEnvelope[3]) {
             System.out.println("Конверты поместятся один в один");
             return true;
         }
-        if (myEnvelope[0] <= myEnvelope[3] && myEnvelope[1] <= myEnvelope[2]) {
+        if (myEnvelope[0] < myEnvelope[3] && myEnvelope[1] < myEnvelope[2]) {
             System.out.println("Конверты поместятся один в один");
             return true;
         }
-        if (myEnvelope[2] <= myEnvelope[0] && myEnvelope[3] <= myEnvelope[1]) {
+        if (myEnvelope[2] < myEnvelope[0] && myEnvelope[3] < myEnvelope[1]) {
             System.out.println("Конверты поместятся один в один");
             return true;
         }
-        if (myEnvelope[3] <= myEnvelope[0] && myEnvelope[2] <= myEnvelope[1]) {
+        if (myEnvelope[3] < myEnvelope[0] && myEnvelope[2] < myEnvelope[1]) {
             System.out.println("Конверты поместятся один в один");
             return true;
         } else {
@@ -63,6 +70,16 @@ public class Envelope {
         if (ansverStr.equals("y") || ansverStr.equals("yes")) {
             repeatEnvelop();
         }
+    }
+
+    private boolean validationEnvelope(double[] myEnvelope) {
+        for (double x : myEnvelope) {
+            if (x <=0) {
+                return false;
+            }
+        }
+        return true;
+
     }
 
 }
