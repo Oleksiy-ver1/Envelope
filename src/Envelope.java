@@ -5,41 +5,18 @@ import java.util.Locale;
 
 
 public class Envelope {
-    private double[] myEnvelope = new double[4];
 
-    private double[] getEnvelop() throws IOException {
+    DimensionsFromString dimensionEnvelope = new DimensionsFromString();
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        //System.in – объект класса InputStream, присвоенный переменной in, находящейся в классе System пакета
-        // java.lang. Данный объект выполняет функцию стандартного потока ввода, т. е. ввода с клавиатуры. System.in
-        // обеспечивает низкоуровневый ввод, при котором методом read() считываются байты.
-        //Первая обертка – класс InputStreamReader, который преобразует набор байтов в символ. Класс BufferedReader
-        // буферизует ввод, обеспечивая считывание из потока ввода (клавиатура это или файл – не важно) целых строк,
-        // что делает процесс более быстрым.
-        System.out.print("Введите размер высоты первого конверта ");
-        String aStr = reader.readLine();
-        System.out.print("Введите размер ширины первого конверта ");
-        String bStr = reader.readLine();
-        System.out.print("Введите размер высоты второго конверта ");
-        String cStr = reader.readLine();
-        System.out.print("Введите размер ширины второго конверта ");
-        String dStr = reader.readLine();
-        myEnvelope[0] = Double.parseDouble(aStr);
-        myEnvelope[1] = Double.parseDouble(bStr);
-        myEnvelope[2] = Double.parseDouble(cStr);
-        myEnvelope[3] = Double.parseDouble(dStr);
+    private boolean plaiceInside(double[] myEnvelope) throws IOException {
+//        DimensionsFromString dimensionEnvelope = new DimensionsFromString();
+        dimensionEnvelope.getEnvelop();
 
+//выполняем проверку введенных данных
+//
+        Validation check = new Validation();
+        if (check.validationEnvelope(myEnvelope)) return false;
 
-        return myEnvelope;
-    }
-
-    private Boolean plaiceInside() throws IOException {
-        getEnvelop();
-
-        if (!validationEnvelope(myEnvelope)){
-            System.out.println("размер должен быть больше 0");
-            return false;
-        }
 
         if (myEnvelope[0] < myEnvelope[2] && myEnvelope[1] < myEnvelope[3]) {
             System.out.println("Конверты поместятся один в один");
@@ -62,24 +39,15 @@ public class Envelope {
         }
     }
 
+    //    запускает повтор. Реализация через рекурсию.
     public void repeatEnvelop() throws IOException {
-        plaiceInside();
+        plaiceInside(dimensionEnvelope.myEnvelope);
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         System.out.print("Хотите продолжить?(Yes/No)  ");
-        String ansverStr = reader.readLine().toLowerCase(Locale.ROOT);
-        if (ansverStr.equals("y") || ansverStr.equals("yes")) {
+        String answerStr = reader.readLine().toLowerCase(Locale.ROOT);
+        if (answerStr.equals("y") || answerStr.equals("yes")) {
             repeatEnvelop();
         }
-    }
-
-    private boolean validationEnvelope(double[] myEnvelope) {
-        for (double x : myEnvelope) {
-            if (x <=0) {
-                return false;
-            }
-        }
-        return true;
-
     }
 
 }
